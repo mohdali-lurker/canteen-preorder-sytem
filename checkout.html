@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="College Canteen Pre-Order System: order ahead and skip the queue.">
+  <title>Checkout | College Canteen</title>
+  <script>if (localStorage.getItem("canteen_theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="checkout">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="brand" id="brand">🍽️ College Canteen</a>
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="cart.html" class="nav-link">Cart <span id="cart-count" class="badge">0</span></a></li>
+        <li><a href="history.html" class="nav-link">Order history</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><button id="theme-toggle" class="btn btn-icon" type="button" aria-label="Switch to dark mode">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container">
+    <section id="checkout-section" aria-labelledby="checkout-title">
+      <div class="page-header">
+        <h1 id="checkout-title">Checkout</h1>
+      </div>
+
+      <div class="cart-layout">
+        <form id="checkout-form" class="form" novalidate>
+          <fieldset class="fieldset">
+            <legend>Your details</legend>
+            <div class="form-group">
+              <label for="customer-name">Full name</label>
+              <input type="text" id="customer-name" name="name" class="input" required minlength="2" autocomplete="name">
+              <small class="error-msg" id="name-error" role="alert"></small>
+            </div>
+            <div class="form-group">
+              <label for="student-id">Student ID</label>
+              <input type="text" id="student-id" name="studentId" class="input" required>
+              <small class="error-msg" id="student-id-error" role="alert"></small>
+            </div>
+            <div class="form-group">
+              <label for="customer-phone">Phone number</label>
+              <input type="tel" id="customer-phone" name="phone" class="input" required inputmode="numeric" maxlength="10" autocomplete="tel">
+              <small class="error-msg" id="phone-error" role="alert"></small>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend>Pickup</legend>
+            <div class="form-group">
+              <label for="pickup-slot">Pickup time slot</label>
+              <select id="pickup-slot" name="pickupSlot" class="input" required>
+                <option value="">Select a time slot</option>
+                <!-- Slots are added here by app.js -->
+              </select>
+              <small class="error-msg" id="slot-error" role="alert"></small>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend>Payment method</legend>
+            <label class="radio-label" for="pay-cash"><input type="radio" id="pay-cash" name="payment" value="Cash at counter" checked> Cash at counter</label>
+            <label class="radio-label" for="pay-upi"><input type="radio" id="pay-upi" name="payment" value="UPI"> UPI</label>
+            <label class="radio-label" for="pay-card"><input type="radio" id="pay-card" name="payment" value="Card"> Card</label>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary btn-block" id="place-order-btn">Place order</button>
+        </form>
+
+        <aside class="summary-box" id="checkout-summary" aria-labelledby="checkout-summary-title">
+          <h2 id="checkout-summary-title">Order summary</h2>
+          <ul class="summary-items" id="checkout-items">
+            <!-- Cart items are rendered here by app.js -->
+          </ul>
+          <dl class="summary-list">
+            <div class="summary-row"><dt>Subtotal</dt><dd id="checkout-subtotal">₹0.00</dd></div>
+            <div class="summary-row"><dt>Tax (5%)</dt><dd id="checkout-tax">₹0.00</dd></div>
+            <div class="summary-row summary-total"><dt>Total</dt><dd id="checkout-total">₹0.00</dd></div>
+          </dl>
+          <div class="queue-widget" id="queue-widget" aria-live="polite">
+        <p class="queue-row">Orders ahead: <strong id="orders-ahead">--</strong></p>
+        <p class="queue-row">Estimated pickup time: <strong id="wait-time">--</strong> minutes</p>
+        <p class="queue-row">Recommended pickup time: <strong id="pickup-time">--</strong></p>
+        <span id="queue-status" class="status-badge">Loading</span>
+      </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="confirmation-section" class="confirmation" aria-labelledby="confirm-title" hidden>
+      <h1 id="confirm-title">Order placed</h1>
+      <p>Thank you, <strong id="confirm-name"></strong>. Your order is confirmed.</p>
+      <dl class="summary-list">
+        <div class="summary-row"><dt>Order ID</dt><dd id="confirm-order-id"></dd></div>
+        <div class="summary-row"><dt>Placed on</dt><dd id="confirm-time"></dd></div>
+        <div class="summary-row"><dt>Pickup slot</dt><dd id="confirm-slot"></dd></div>
+        <div class="summary-row"><dt>Payment</dt><dd id="confirm-payment"></dd></div>
+        <div class="summary-row"><dt>Orders ahead of you</dt><dd id="confirm-orders-ahead"></dd></div>
+        <div class="summary-row"><dt>Estimated pickup time</dt><dd><span id="confirm-wait"></span> minutes</dd></div>
+        <div class="summary-row"><dt>Recommended pickup time</dt><dd id="confirm-pickup-time"></dd></div>
+        <div class="summary-row summary-total"><dt>Total paid</dt><dd id="confirm-total"></dd></div>
+      </dl>
+      <h2>Items</h2>
+      <ul class="summary-items" id="confirm-items"></ul>
+      <div class="hero-actions">
+        <a href="history.html" class="btn btn-primary" id="confirm-history-btn">View order history</a>
+        <a href="menu.html" class="btn btn-secondary" id="order-again-btn">Order again</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 College Canteen Pre-Order System. Mini project.</p>
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="history.html">Order history</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

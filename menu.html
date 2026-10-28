@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="College Canteen Pre-Order System: order ahead and skip the queue.">
+  <title>Menu | College Canteen</title>
+  <script>if (localStorage.getItem("canteen_theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="menu">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="brand" id="brand">🍽️ College Canteen</a>
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link active" aria-current="page">Menu</a></li>
+        <li><a href="cart.html" class="nav-link">Cart <span id="cart-count" class="badge">0</span></a></li>
+        <li><a href="history.html" class="nav-link">Order history</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><button id="theme-toggle" class="btn btn-icon" type="button" aria-label="Switch to dark mode">🌙</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container">
+    <section class="page-header" aria-labelledby="menu-title">
+      <h1 id="menu-title">Food menu</h1>
+      <p>Pick what you like and add it to your cart.</p>
+    </section>
+
+    <section class="menu-controls" id="menu-controls" aria-label="Search and filter menu">
+      <div class="search-box">
+        <label for="menu-search" class="visually-hidden">Search menu</label>
+        <input type="search" id="menu-search" class="input" placeholder="Search for a dish" autocomplete="off">
+      </div>
+      <div class="filter-bar" id="category-filters" role="group" aria-label="Filter by category">
+        <button type="button" class="filter-btn active" data-category="all">All</button>
+        <button type="button" class="filter-btn" data-category="Snacks">Snacks</button>
+        <button type="button" class="filter-btn" data-category="Meals">Meals</button>
+        <button type="button" class="filter-btn" data-category="Beverages">Beverages</button>
+        <button type="button" class="filter-btn" data-category="Desserts">Desserts</button>
+      </div>
+    </section>
+
+    <section id="menu-section" aria-label="Menu items">
+      <div class="food-grid" id="menu-grid">
+        <!-- Food cards are rendered here by app.js -->
+      </div>
+      <div class="empty-state" id="menu-empty" hidden>
+        <p>No dishes match your search.</p>
+        <button type="button" class="btn btn-secondary" id="reset-filters-btn">Clear filters</button>
+      </div>
+    </section>
+
+    <a href="cart.html" class="floating-cart" id="floating-cart">View cart (<span id="floating-cart-count">0</span>)</a>
+
+  </main>
+
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 College Canteen Pre-Order System. Mini project.</p>
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="history.html">Order history</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
